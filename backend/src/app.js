@@ -13,7 +13,7 @@ app.use(helmet());
 app.use(cors({
   origin: [
     'http://localhost:5173',
-    'https://nasa-apod-explorer-frontend.vercel.app',
+    'https://nasa-apod-explorer-sepia.vercel.app',
     'https://nasa-apod-explorer-backend.vercel.app'
   ],
   credentials: true
@@ -69,3 +69,4 @@ app.listen(PORT, () => {
   console.log(`API available at: http://localhost:${PORT}/apod`);
 
 });
+

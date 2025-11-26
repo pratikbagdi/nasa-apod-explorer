@@ -14,8 +14,7 @@ A beautiful, responsive web application to explore NASA's Astronomy Picture of t
 ## 🛠️ Tech Stack
 
 **Frontend:** React, Material-UI, Vite  
-**Backend:** Node.js, Express, Axios  
-**Styling:** CSS3 with cosmic animations
+**Backend:** Node.js, Express, Axios 
 
 ## 🏃‍♂️ Quick Start
 

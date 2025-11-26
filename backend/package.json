@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "nasa-apod-backend",
   "version": "1.0.0",
   "description": "Backend service for NASA APOD Explorer with caching and rate limiting",

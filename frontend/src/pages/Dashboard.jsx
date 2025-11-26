@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Grid,
@@ -42,7 +42,13 @@ const Dashboard = () => {
   const handleDateChange = (date) => {
     setSelectedDate(date);
     if (date) {
-      const dateString = date.toISOString().split('T')[0];
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const dateString = `${year}-${month}-${day}`;
+      
+      console.log('Selected date:', dateString);
+      
       if (dateString === getTodayDateString()) {
         fetchTodayAPOD();
       } else {
@@ -66,6 +72,16 @@ const Dashboard = () => {
   };
 
   const isTodaySelected = !selectedDate;
+
+  const getDisplayDate = () => {
+    if (selectedDate) {
+      const year = selectedDate.getFullYear();
+      const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+      const day = String(selectedDate.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+    return getTodayDateString();
+  };
 
   if (error) {
     return (
@@ -208,12 +224,28 @@ const Dashboard = () => {
                     )}
                     {apod.isFallback && <Chip label="Sample" color="warning" size="small" />}
                     {isTodaySelected && <Chip label="Today" color="success" size="small" />}
+                    {selectedDate && (
+                      <Chip 
+                        label={`Selected: ${getDisplayDate()}`} 
+                        color="info" 
+                        size="small" 
+                        variant="outlined" 
+                      />
+                    )}
                   </Box>
                 </Box>
 
                 <Typography variant="subtitle1" color="text.secondary" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <CalendarTodayIcon fontSize="small" />
                   {safeFormatDate(apod.date)}
+                  {selectedDate && apod.date !== getDisplayDate() && (
+                    <Chip 
+                      label={`Showing: ${apod.date}`} 
+                      size="small" 
+                      color="warning" 
+                      variant="outlined"
+                    />
+                  )}
                   {apod.copyright && ` • © ${apod.copyright}`}
                 </Typography>
 
@@ -224,6 +256,15 @@ const Dashboard = () => {
                 {apod.isFallback && (
                   <Alert severity="info" sx={{ mt: 2 }}>
                     <strong>Note:</strong> This is sample content. The actual APOD will load automatically when rate limits allow.
+                  </Alert>
+                )}
+
+                {process.env.NODE_ENV === 'development' && (
+                  <Alert severity="info" sx={{ mt: 2 }}>
+                    <strong>Debug Info:</strong><br />
+                    Selected Date: {selectedDate ? getDisplayDate() : 'Today'}<br />
+                    APOD Date: {apod.date}<br />
+                    Match: {selectedDate ? (getDisplayDate() === apod.date ? 'Yes' : 'No') : 'Today'}
                   </Alert>
                 )}
               </CardContent>

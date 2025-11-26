@@ -14,7 +14,7 @@ app.use(cors({
   origin: [
     'http://localhost:5173',
     'https://nasa-apod-explorer-frontend.vercel.app',
-    'https://nasa-apod-explorer.vercel.app'
+    'https://nasa-apod-explorer-backend.vercel.app'
   ],
   credentials: true
 }));
@@ -67,4 +67,5 @@ app.listen(PORT, () => {
   console.log(`Using NASA API Key: ${process.env.NASA_API_KEY ? 'Present' : 'MISSING!'}`);
   console.log(`Cache TTL: ${process.env.CACHE_TTL}ms, Max Size: ${process.env.CACHE_MAX_SIZE}`);
   console.log(`API available at: http://localhost:${PORT}/apod`);
+
 });
